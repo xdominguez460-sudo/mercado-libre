@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espacio de Recuperación y Crecimiento</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+            min-height: 100vh;
+            padding: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .contenedor {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            color: #2e7d32;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitulo {
+            color: #558b2f;
+            font-size: 1.1rem;
+        }
+
+        .navegacion {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .nav-btn {
+            padding: 0.7rem 1.2rem;
+            background: white;
+            border: 2px solid #81c784;
+            border-radius: 8px;
+            color: #2e7d32;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn.activo, .nav-btn:hover {
+            background: #81c784;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .seccion {
+            display: none;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+
+        .seccion.visible {
+            display: block;
+        }
+
+        h2 {
+            color: #2e7d32;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #c8e6c9;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tarjeta-curso {
+            background: #f8fff8;
+            border-left: 4px solid #4caf50;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.2rem;
+            transition: 0.3s;
+        }
+
+        .tarjeta-curso:hover {
+            transform: translateX(5px);
+            box-shadow: 0 3px 10px rgba(76,175,80,0.15);
+        }
+
+        .id-curso {
+            display: inline-block;
+            background: #2e7d32;
+            color: white;
+            padding: 0.25rem 0.7rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 0.8rem;
+        }
+
+        .nombre-curso {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #1b5e20;
+            margin-bottom: 0.5rem;
+        }
+
+        .detalle {
+            margin: 0.4rem 0;
+            color: #444;
+            font-size: 0.95rem;
+        }
+
+        .etiqueta {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .etiqueta.iniciacion { background: #e3f2fd; color: #1565c0; }
+        .etiqueta.profundizacion { background: #fff3e0; color: #ef6c00; }
+        .etiqueta.avanzado { background: #f3e5f5; color: #7b1fa2; }
+
+        .tabla-historial {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .tabla-historial th, .tabla-historial td {
+            padding: 0.9rem;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .tabla-historial th {
+            background: #c8e6c9;
+            color: #2e7d32;
+            font-weight: 600;
+        }
+
+        .tabla-historial tr:hover {
+            background: #f8fff8;
+        }
+
+        .estado-aprobado { color: #2e7d32; font-weight: bold; }
+        .estado-proceso { color: #f57c00; font-weight: bold; }
+
+        .mensaje-bienvenida {
+            background: #fffde7;
+            padding: 1.2rem;
+            border-radius: 8px;
+            border-left: 4px solid #fdd835;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            color: #5d4037;
+        }
+
+        @media (max-width: 768px) {
+            .tabla-historial { display: block; overflow-x: auto; }
+            h1 { font-size: 1.6rem; }
+            .seccion { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="contenedor">
+    <header>
+        <h1>🌱 Espacio de Recuperación y Crecimiento</h1>
+        <p class="subtitulo">Programa de cursos para fortalecer tu camino hacia una vida plena y libre</p>
+    </header>
+
+    <div class="mensaje-bienvenida">
+        💪 "Cada paso que das para cambiar es un paso hacia ti mismo. No estás solo, aquí tienes herramientas, guías y acompañamiento para lograrlo."
+    </div>
+
+    <!-- Navegación -->
+    <div class="navegacion">
+        <button class="nav-btn activo" onclick="mostrarSeccion('cursos')">📚 Cursos Disponibles</button>
+        <button class="nav-btn" onclick="mostrarSeccion('historial')">📜 Mi Historial</button>
+        <button class="nav-btn" onclick="mostrarSeccion('maestros')">👩‍🏫 Nuestros Instructores</button>
+    </div>
+
+    <!-- SECCIÓN 1: CURSOS -->
+    <div id="cursos" class="seccion visible">
+        <h2>📚 Cursos diseñados para tu recuperación</h2>
+        <p style="margin-bottom: 1.5rem;">Todos los cursos son gratuitos, confidenciales y están adaptados a diferentes etapas de tu proceso:</p>
+
+        <div class="tarjeta-curso">
+            <span class="id-curso">CUR-REC-001</span>
+            <div class="nombre-curso">Reconociendo mis emociones y mis triggers</div>
+            <div class="detalle"><strong>Objetivo:</strong> Aprender a identificar qué situaciones, sentimientos o personas te llevan a querer consumir, y cómo actuar diferente.</div>
+            <div class="detalle"><strong>Duración:</strong> 4 semanas / 2 sesiones por semana</div>
+            <div class="detalle"><strong>Dirigido a:</strong> Etapa inicial de cambio</div>
+            <span class="etiqueta iniciacion">Iniciación</span>
+        </div>
+
+        <div class="tarjeta-curso">
+            <span class="id-curso">CUR-REC-002</span>
+            <div class="nombre-curso">Habilidades para decir "NO" y poner límites</div>
+            <div class="detalle"><strong>Objetivo:</strong> Fortalecer tu voluntad, aprender a rechazar invitaciones y rodearte de personas que te apoyen.</div>
+            <div class="detalle"><strong>Duración:</strong> 5 semanas</div>
+            <div class="detalle"><strong>Dirigido a:</strong> Quienes ya tomaron la decisión de cambiar</div>
+            <span class="etiqueta iniciacion">Iniciación</span>
+        </div>
+
+        <div class="tarjeta-curso">
+            <span class="id-curso">CUR-REC-003</span>
+            <div class="nombre-curso">Manejo del estrés y ansiedad sin sustancias</div>
+            <div class="detalle"><strong>Objetivo:</strong> Encontrar formas saludables de calmarte cuando te sientas mal, cansado o preocupado.</div>
+            <div class="detalle"><strong>Duración:</strong> 6 semanas</div>
+            <div class="detalle"><strong>Dirigido a:</strong> Todas las etapas</div>
+            <span class="etiqueta profundizacion">Profundización</span>
+        </div>
+
+        <div class="tarjeta-curso">
+            <span class="id-curso">CUR-REC-004</span>
+            <div class="nombre-curso">Reconstruyendo mi propósito y proyectos de vida</div>
+            <div class="detalle"><strong>Objetivo:</strong> Descubrir qué te apasiona, qué quieres lograr y darle sentido a tu día a día.</div>
+            <div class="detalle"><strong>Duración:</strong> 8 semanas</div>
+            <div class="detalle"><strong>Dirigido a:</strong> Quienes ya llevan tiempo en su proceso</div>
+            <span class="etiqueta avanzado">Avanzado</span>
+        </div>
+
+        <div class="tarjeta-curso">
+            <span class="id-curso">CUR-REC-005</span>
+            <div class="nombre-curso">Relaciones sanas y reparación de vínculos</div>
+            <div class="detalle"><strong>Objetivo:</strong> Mejorar la relación con tu familia, amigos y construir lazos que te ayuden a mantenerte firme.</div>
+            <div class="detalle"><strong>Duración:</strong> 5 semanas</div>
+            <div class="detalle"><strong>Dirigido a:</strong> Todas las etapas</div>
+            <span class="etiqueta profundizacion">Profundización</span>
+        </div>
+    </div>
+
+    <!-- SECCIÓN 2: HISTORIAL -->
+    <div id="historial" class="seccion">
+        <h2>📜 Mi Historial de Cursos</h2>
+        <p style="margin-bottom: 1rem;">Aquí puedes ver tu avance, lo que has concluido y lo que estás cursando:</p>
+
+        <table class="tabla-historial">
+            <thead>
+                <tr>
+                    <th>ID Curso</th>
+                    <th>Nombre del Curso</th>
+                    <th>Instructor</th>
+                    <th>Fecha inicio</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>CUR-REC-001</td>
+                    <td>Reconociendo mis emociones y mis triggers</td>
+                    <td>Lic. Marisol Cruz</td>
+                    <td>15/06/2026</td>
+                    <td class="estado-aprobado">✅ Concluido</td>
+                </tr>
+                <tr>
+                    <td>CUR-REC-003</td>
+                    <td>Manejo del estrés y ansiedad sin sustancias</td>
+                    <td>Dr. Iván Torres</td>
+                    <td>29/06/2026</td>
+                    <td class="estado-proceso">⏳ En curso</td>
+                </tr>
+                <tr>
+                    <td>CUR-REC-002</td>
+                    <td>Habilidades para decir "NO" y poner límites</td>
+                    <td>Lic. Ana Vázquez</td>
+                    <td>---</td>
+                    <td>📝 Pendiente de inscribir</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- SECCIÓN 3: MAESTROS -->
+    <div id="maestros" class="seccion">
+        <h2>👩‍🏫 Nuestro equipo de instructores</h2>
+        <p style="margin-bottom: 1.5rem;">Todos cuentan con formación en psicología, adicciones y acompañamiento respetuoso:</p>
+
+        <div class="tarjeta-curso">
+            <div class="nombre-curso">Lic. Marisol Cruz Hernández</div>
+            <div class="detalle"><strong>Especialidad:</strong> Psicología clínica y manejo de emociones</div>
+            <div class="detalle"><strong>Imparte:</strong> CUR-REC-001</div>
+            <div class="detalle"><strong>Experiencia:</strong> 10 años trabajando con procesos de recuperación</div>
+        </div>
+
+        <div class="tarjeta-curso">
+            <div class="nombre-curso">Dr. Iván Torres Mendoza</div>
+            <div class="detalle"><strong>Especialidad:</strong> Salud mental, estrés y ansiedad</div>
+            <div class="detalle"><strong>Imparte:</strong> CUR-REC-003</div>
+            <div class="detalle"><strong>Experiencia:</strong> Especialista en terapias alternativas y salud integral</div>
+        </div>
+
+        <div class="tarjeta-curso">
+            <div class="nombre-curso">Lic. Ana Vázquez Romero</div>
+            <div class="detalle"><strong>Especialidad:</strong> Habilidades sociales y dinámicas familiares</div>
+            <div class="detalle"><strong>Imparte:</strong> CUR-REC-002, CUR-REC-005</div>
+            <div class="detalle"><strong>Experiencia:</strong> Trabajo comunitario y grupos de apoyo mutuo</div>
+        </div>
+
+        <div class="tarjeta-curso">
+            <div class="nombre-curso">Mtro. Ernesto Soto Luna</div>
+            <div class="detalle"><strong>Especialidad:</strong> Proyectos de vida y desarrollo personal</div>
+            <div class="detalle"><strong>Imparte:</strong> CUR-REC-004</div>
+            <div class="detalle"><strong>Experiencia:</strong> Acompañamiento en reinserción social y laboral</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function mostrarSeccion(idSeccion) {
+        // Ocultar todas las secciones
+        document.querySelectorAll('.seccion').forEach(s => s.classList.remove('visible'));
+        // Quitar clase activa de botones
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('activo'));
+        
+        // Mostrar la seleccionada
+        document.getElementById(idSeccion).classList.add('visible');
+        // Marcar botón como activo
+        event.target.classList.add('activo');
+    }
+</script>
+
+</body>
+</html>
